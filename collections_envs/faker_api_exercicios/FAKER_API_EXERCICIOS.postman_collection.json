@@ -1,0 +1,1157 @@
+{
+	"info": {
+		"_postman_id": "05347ffe-516b-41c4-ab76-a4e0040362aa",
+		"name": "FAKER_API_EXERCICIOS",
+		"description": "# Faker API Exercícios\n\nEsta collection é destinada a resolução exercícios de fixação envolvendo as APIs do site [Faker API](https://fakerapi.it/en).\n\n## Importando Collection e Environment\n\n- Crie um workspace ou utilize um já existente\n    \n- Arraste e solte os arquivos dessa pasta para dentro do seu Postman desktop.\n    \n\n## Collections\n\n### Address\n\nPergunta 1 - Fazer uma requisição no endpoint \"/address\" que:\n\n```\n- Busque 1 endereço\n- Utilize parâmetro “seed”\n- Valide o status code\n- Valide a quantidade de endereços buscados\n- Valide que os campos gerados serão sempre os mesmos\n\n ```\n\n### Books\n\nPergunta 1: Fazer uma requisição no endpoint \"/books\" que:\n\n```\n- Busque 5 livros\n- Valide que foram buscados 5 livros sem utilizar o campo “total” do response body\n\n ```\n\n### Companies\n\nPergunta 1: Fazer uma requisição no endpoint \"/companies\" que:\n\n```\n- Busque 1 elemento\n- Capture quantos endereços esse elemento companhia possui e salve em uma variável\n- Imprima no console o valor dessa variável\n\n ```\n\n### Credit Cards\n\nPergunta 1: Fazer uma requisição no endpoint \"/credit_cards\" que:\n\n```\n- Busque 3 elementos\n- Utilize uma lista de possíveis resultado pra verificar se um deles é igual ao campo type\n- Crie uma lista que não tenha resultados certos e faça um teste negativo\n\n ```\n\n### Images\n\nPergunta 1: Fazer uma requisição no endpoint \"/images\" que:\n\n```\n- Busque 1 elemento\n- Elemento deve ter _width e _height configurado\n- Valide que obteve-se o valor certo de _width e _height \n\n ```\n\nPergunta 2: Fazer uma requisição no endpoint \"/images\" que:\n\n```\n- Mude alguns dados de forma randômica: _width, _height, Tamanho da imagem, Tipo da imagem\n- Os parâmetros definidos de forma randômica devem ser criados no pre-request script\n- Valide-os no POST-Response\n- Será necessário parametrizar a URL de requisição com os dados randômicos\n- Observe que o tipo de imagem \"kittens\" gera variações na url, será necessário implementar um condicional \"if\"\n\n ```\n\n### Persons\n\nPergunta 1: Fazer uma requisição no endpoint \"/persons\" que:\n\n```\n- Utilize _quantity = 1\n- Utilize os parâmetros: _gender, _birthday_start , _birthday_end\n- Valide o gênero escolhido (se desejar pode fazer de forma randômica)\n- Valide as datas escolhida\n\n ```\n\nPergunta 2: Fazer uma requisição no endpoint \"/persons\" que:\n\n```\n- Utilize _quantity > 1\n- Utilize os parâmetros: _gender, _birthday_start , _birthday_end\n- Valide o gênero escolhido (se desejar pode fazer de forma randômica)\n- Valide as datas escolhida\n\n ```\n\nPergunta 3: Fazer uma requisição no endpoint \"/persons\" que:\n\n```\n- Utilize gender fixo\n- Utilize o parametro \"seed\"\n- Utilize a função com .find() para encontrar algum Firstname e validar se existe\n- Utilize a função com .find() para validar que não existe um dos generos\nGender\n\n ```\n\n### Places\n\nPergunta 1: Fazer uma requisição no endpoint \"/places\" que:\n\n```\n- Valide quais hemisférios está o endereço gerado utilizando Latitude e Longitude\n\n ```\n\n### Products\n\nPergunta 1: Fazer uma requisição no endpoint \"/products\" que:\n\n```\n- Valide que preços min e max estão dentro do range pedido\n- Valide o preço antes e após taxas\n\n ```",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26881860"
+	},
+	"item": [
+		{
+			"name": "ADDRESS",
+			"item": [
+				{
+					"name": "ADDRESS - PERGUNTAS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/addresses",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADDRESS - RESPOSTA 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// SEED 123\r",
+									"var street  = \"47181 Gutmann Locks\"\r",
+									"var zip_code = \"59471-1112\"\r",
+									"\r",
+									"pm.test(\"Valida status code\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validação existe apenas 1 endereço sendo buscado\", function () {\r",
+									"    var jsonResponse = pm.response.json()\r",
+									"    pm.expect(jsonResponse.total).to.equal(1)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validação de campos\", function () {\r",
+									"    var jsonResponse = pm.response.json()\r",
+									"    pm.expect(jsonResponse.data[0].street).to.equal(street)\r",
+									"    pm.expect(jsonResponse.data[0].zipcode).to.equal(zip_code)\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/addresses?_quantity=1&_seed=123",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"addresses"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "1"
+								},
+								{
+									"key": "_seed",
+									"value": "123"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BOOKS",
+			"item": [
+				{
+					"name": "BOOKS - PERGUNTAS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/books",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BOOKS - RESPOSTA 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validação de campos\", function () {\r",
+									"    var jsonResponse = pm.response.json()\r",
+									"    var data = jsonResponse.data.length\r",
+									"    \r",
+									"    console.log(data)\r",
+									"\r",
+									"    pm.expect(data).to.equal(5)\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/books?_quantity=5",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"books"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "COMPANIES",
+			"item": [
+				{
+					"name": "COMPANIES - PERGUNTAS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/companies?_quantity=1",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "COMPANIES - RESPOSTA 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validação de quantidade de endereços\", function () {\r",
+									"    var jsonResponse = pm.response.json()\r",
+									"    var data = jsonResponse.data[0].addresses.length\r",
+									"    \r",
+									"    console.log(\"Possui \" + data + \" endereços\")\r",
+									"\r",
+									"    for (let i = 0; i < data; i++){\r",
+									"        // console.log(i)\r",
+									"        pm.environment.set(\"street_\"+i, jsonResponse.data[0].addresses[i].street);\r",
+									"        console.log(pm.environment.get(\"street_\"+i));\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/companies?_quantity=1",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"companies"
+							],
+							"query": [
+								{
+									"key": "_seed",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "_quantity",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CREDIT CARDS",
+			"item": [
+				{
+					"name": "CREDIT CARD - PERGUNTAS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/credit_cards",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"credit_cards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREDIT CARD - RESPOSTA 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonResponse = pm.response.json()\r",
+									"var quantidade = jsonResponse.total\r",
+									"var type_validation_1 = [\"Visa\",\"MasterCard\",\"American Express\", \"Discover Card\",\"Visa Retired\"]\r",
+									"var type_validation_2 = [\"erro\",\"nao contem\"]\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validação de type com valores que exitem\", function () {\r",
+									"\r",
+									"    for (let i = 0; i < quantidade; i++){\r",
+									"        console.log(jsonResponse.data[i].type)\r",
+									"        pm.expect(jsonResponse.data[i].type).to.be.oneOf(type_validation_1)\r",
+									"\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validação de type com valores que não existem\", function () {\r",
+									"\r",
+									"    for (let i = 0; i < quantidade; i++){\r",
+									"        console.log(jsonResponse.data[i].type)\r",
+									"        pm.expect(jsonResponse.data[i].type).to.not.be.oneOf(type_validation_2)\r",
+									"\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/credit_cards?_quantity=3",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"credit_cards"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "IMAGES",
+			"item": [
+				{
+					"name": "IMAGES - PERGUNTAS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/images?_quantity=1&_type=animals&_height=300&_width=300",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"images"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "1"
+								},
+								{
+									"key": "_type",
+									"value": "animals"
+								},
+								{
+									"key": "_height",
+									"value": "300"
+								},
+								{
+									"key": "_width",
+									"value": "300"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "IMAGES - RESPOSTA 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonresponse = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Validação de tamanho\", function () {\r",
+									"    pm.expect(jsonresponse.data[0].url).contain(\"/300/450/\")\r",
+									"    pm.expect(jsonresponse.data[0].url).to.eq(\"http://placeimg.com/300/450/any\")\r",
+									"\r",
+									"\r",
+									"    // pm.expect(VARIAVEL).to...............(VARIAVEL OU STRING)\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"packages": {},
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/images?_quantity=1&_height=450&_width=300",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"images"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "1"
+								},
+								{
+									"key": "_height",
+									"value": "450"
+								},
+								{
+									"key": "_width",
+									"value": "300"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "IMAGES - RESPOSTA 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const lodash = require('lodash');\r",
+									"\r",
+									"var list = [\"any\", \"animals\", \"architecture\", \"nature\", \"people\", \"tech\", \"kittens\", \"pokemon\"]\r",
+									"\r",
+									"// Tipo de imagem\r",
+									"var list_random = lodash.sample(list)\r",
+									"pm.environment.set(\"image_type\", list_random);\r",
+									"\r",
+									"// _width\r",
+									"var var_width = lodash.random(300,600)\r",
+									"pm.environment.set(\"var_width\", var_width);\r",
+									"\r",
+									"// _height\r",
+									"var var_height = lodash.random(300,600)\r",
+									"pm.environment.set(\"var_height\", var_height);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonresponse = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Validação de tamanho\", function () {\r",
+									"    pm.expect(jsonresponse.data[0].url).contain(\"/\" + pm.environment.get(\"var_width\") + \"/\" + pm.environment.get(\"var_height\"));\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validação de tipo\", function () {\r",
+									"\r",
+									"    if (pm.environment.get(\"image_type\") == \"kittens\"){\r",
+									"        pm.expect(jsonresponse.data[0].url).contain(\"placekitten\");\r",
+									"    }\r",
+									"    else{\r",
+									"        pm.expect(jsonresponse.data[0].url).contain(pm.environment.get(\"image_type\"));\r",
+									"    }\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/images?_quantity=1&_height={{var_height}}&_width={{var_width}}&_type={{image_type}}",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"images"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "1"
+								},
+								{
+									"key": "_height",
+									"value": "{{var_height}}"
+								},
+								{
+									"key": "_width",
+									"value": "{{var_width}}"
+								},
+								{
+									"key": "_type",
+									"value": "{{image_type}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PERSONS",
+			"item": [
+				{
+					"name": "PERSONS - PERGUNTAS",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/persons?_quantity=1",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"persons"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "1"
+								},
+								{
+									"key": "_gender",
+									"value": "{{gender}}",
+									"disabled": true
+								},
+								{
+									"key": "_birthday_start",
+									"value": "2005-01-01",
+									"disabled": true
+								},
+								{
+									"key": "_birthday_end",
+									"value": "2005-12-31",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PERSONS - RESPOSTA 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const lodash = require('lodash');\r",
+									"\r",
+									"// Genero\r",
+									"var gender = lodash.sample([\"male\", \"female\"])\r",
+									"pm.environment.set(\"gender\", gender);\r",
+									"\r",
+									"// // _width\r",
+									"// var var_width = lodash.random(300,600)\r",
+									"// pm.environment.set(\"var_width\", var_width);\r",
+									"\r",
+									"// // _height\r",
+									"// var var_height = lodash.random(300,600)\r",
+									"// pm.environment.set(\"var_height\", var_height);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonresponse = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Validação de Gênero\", function () {\r",
+									"    pm.expect(jsonresponse.data[0].gender).to.be.equal(pm.environment.get(\"gender\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validação de data\", function () {\r",
+									"    var birthday  = jsonresponse.data[0].birthday\r",
+									"    var split_list = birthday.split(\"-\")\r",
+									"\r",
+									"    pm.expect(split_list[0]).to.be.equal(\"2005\");\r",
+									"    pm.expect(parseInt(split_list[1])).to.be.lessThan(13)\r",
+									"    pm.expect(parseInt(split_list[2])).to.be.lessThan(31)\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/persons?_quantity=1&_gender={{gender}}&_birthday_start=2005-01-01&_birthday_end=2005-12-31",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"persons"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "1"
+								},
+								{
+									"key": "_gender",
+									"value": "{{gender}}"
+								},
+								{
+									"key": "_birthday_start",
+									"value": "2005-01-01"
+								},
+								{
+									"key": "_birthday_end",
+									"value": "2005-12-31"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PERSONS - RESPOSTA 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const lodash = require('lodash');\r",
+									"\r",
+									"// Genero\r",
+									"var gender = lodash.sample([\"male\", \"female\"])\r",
+									"pm.environment.set(\"gender\", gender);\r",
+									"\r",
+									"// // _width\r",
+									"// var var_width = lodash.random(300,600)\r",
+									"// pm.environment.set(\"var_width\", var_width);\r",
+									"\r",
+									"// // _height\r",
+									"// var var_height = lodash.random(300,600)\r",
+									"// pm.environment.set(\"var_height\", var_height);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonresponse = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Validação de Gênero\", function () {\r",
+									"    for (i=0; i < jsonresponse.total; i++){\r",
+									"        pm.expect(jsonresponse.data[i].gender).to.be.equal(pm.environment.get(\"gender\"));\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validação de data\", function () {\r",
+									"    \r",
+									"    for (i=0; i < jsonresponse.total; i++){\r",
+									"        var birthday  = jsonresponse.data[i].birthday\r",
+									"        var split_list = birthday.split(\"-\")\r",
+									"\r",
+									"        pm.expect(split_list[0]).to.be.equal(\"2005\");\r",
+									"        pm.expect(parseInt(split_list[1])).to.be.lessThan(13)\r",
+									"        pm.expect(parseInt(split_list[2])).to.be.lessThan(31)\r",
+									"\r",
+									"    }\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/persons?_quantity=5&_gender={{gender}}&_birthday_start=2005-01-01&_birthday_end=2005-12-31&_seed=123",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"persons"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "5"
+								},
+								{
+									"key": "_gender",
+									"value": "{{gender}}"
+								},
+								{
+									"key": "_birthday_start",
+									"value": "2005-01-01"
+								},
+								{
+									"key": "_birthday_end",
+									"value": "2005-12-31"
+								},
+								{
+									"key": "_seed",
+									"value": "123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PERSONS - RESPOSTA 3",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonresponse = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Validação de Gênero\", function () {\r",
+									"    for (i=0; i < jsonresponse.total; i++){\r",
+									"        pm.expect(jsonresponse.data[i].gender).to.be.equal(\"male\");\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Não existe genero Genero\", function () {\r",
+									"    var gender = jsonresponse.data.find(r => r.gender == \"female\")\r",
+									"    pm.expect(gender).to.eq(undefined)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Buscar Nome\", function () {\r",
+									"    var name = jsonresponse.data.find(r => r.firstname == \"Jordan\")\r",
+									"    pm.expect(name).to.not.eq(undefined)\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/persons?_quantity=100&_gender=male&_seed=123",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"persons"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "100"
+								},
+								{
+									"key": "_gender",
+									"value": "male"
+								},
+								{
+									"key": "_birthday_start",
+									"value": "2005-01-01",
+									"disabled": true
+								},
+								{
+									"key": "_birthday_end",
+									"value": "2005-12-31",
+									"disabled": true
+								},
+								{
+									"key": "_seed",
+									"value": "123"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PLACES",
+			"item": [
+				{
+					"name": "PLACES - PERGUNTAS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/places?_quantity=1",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"places"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PLACES - RESPOSTA 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonresponse = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Validação de data\", function () {\r",
+									"    \r",
+									"    for (i=0; i < jsonresponse.total; i++){\r",
+									"\r",
+									"        var latitude  = jsonresponse.data[i].latitude\r",
+									"        var longitude  = jsonresponse.data[i].longitude\r",
+									"\r",
+									"        // Latitude Norte Sul\r",
+									"        if (parseFloat(latitude)>0){\r",
+									"            var hemi_lat = \"Norte\"\r",
+									"        }\r",
+									"        else if (parseFloat(latitude)<0){\r",
+									"            var hemi_lat = \"Sul\"\r",
+									"        }\r",
+									"\r",
+									"        // Longitude = Leste Oeste\r",
+									"        if (parseFloat(longitude)>0){\r",
+									"            var hemi_log = \"Leste - Oriente\"\r",
+									"        }\r",
+									"        else if (parseFloat(longitude)<180){\r",
+									"            var hemi_log = \"Oeste - Ocidente\"\r",
+									"        }\r",
+									"        \r",
+									"        console.log(\"Endereço com Latidue: \" +latitude+ \" e Longitude: \" +longitude+ \" está nos hesmiférios \" +hemi_lat+ \" e \" +hemi_log)\r",
+									"\r",
+									"    }\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/places?_quantity=5",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"places"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PRODUCTS",
+			"item": [
+				{
+					"name": "PRODUCTS - PERGUNTAS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/products?_quantity=4&_taxes=33&_price_max=10&_price_min=3",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "4"
+								},
+								{
+									"key": "_taxes",
+									"value": "33"
+								},
+								{
+									"key": "_price_max",
+									"value": "10"
+								},
+								{
+									"key": "_price_min",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PRODUCTS - RESPOSTA 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonresponse = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Validação de preço max e min\", function () {\r",
+									"    \r",
+									"    for (i=0; i < jsonresponse.total; i++){\r",
+									"\r",
+									"        var price  = jsonresponse.data[i].net_price\r",
+									"\r",
+									"        pm.expect(parseFloat(price)).to.greaterThan(3)\r",
+									"        pm.expect(parseFloat(price)).to.lessThan(10)\r",
+									"\r",
+									"    }\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validação cálculo taxas\", function () {\r",
+									"    \r",
+									"    for (i=0; i < jsonresponse.total; i++){\r",
+									"\r",
+									"        var price  = jsonresponse.data[i].net_price\r",
+									"        var calculated_price = (parseFloat(price) + (parseFloat(price)*0.33)).toFixed(2)\r",
+									"        \r",
+									"        pm.expect(jsonresponse.data[i].price).to.be.equal(calculated_price)\r",
+									"\r",
+									"    }\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerapi.it/api/v1/products?_quantity=4&_taxes=33&_price_max=10&_price_min=3",
+							"protocol": "https",
+							"host": [
+								"fakerapi",
+								"it"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products"
+							],
+							"query": [
+								{
+									"key": "_quantity",
+									"value": "4"
+								},
+								{
+									"key": "_taxes",
+									"value": "33"
+								},
+								{
+									"key": "_price_max",
+									"value": "10"
+								},
+								{
+									"key": "_price_min",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
