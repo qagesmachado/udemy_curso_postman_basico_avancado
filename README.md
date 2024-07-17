@@ -17,6 +17,7 @@ Este repositório representa o material oficial do curso [Postman do Básico ao 
 - Instale [Node.js](https://nodejs.org/en/download/package-manager/) e o [Newman](https://learning.postman.com/docs/collections/using-newman-cli/installing-running-newman/)
 - Será necessário criar uma conta e se conectar ao Postman
 - Recomendo utilizar o Postman desktop
+- Para utilizar os arquivos disponibilizados façam o download do repositório e arraste e solte os arquivo dentro do Postman Desktop
 
 ## Guia do repositório
 A pasta [guia_aulas](./guia_aulas) terá o direcionamento inicial de como o curso esta dividido.

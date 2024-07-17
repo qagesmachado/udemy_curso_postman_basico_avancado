@@ -1,5 +1,5 @@
 # Reqres Exercícios
-Esta collection é destinada a criação do projeto de teste do conjunto de APIs do site [Reqres](https://reqres.in/api-docs/#/) e [Reqress Swagger](https://reqres.in/api-docs/#/).
+Esta collection é destinada a criação do projeto de teste do conjunto de APIs do site [Reqres](https://reqres.in/) e [Reqress Swagger](https://reqres.in/api-docs/#/).
 
 ## Importando Collection e Environment
 - Crie um workspace ou utilize um já existente
